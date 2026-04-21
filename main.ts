@@ -1,12 +1,19 @@
-export default {
-  async fetch(req: Request) {
+Deno.serve((req) => {
+  const url = new URL(req.url);
 
-    if (req.method === "POST") {
-      return new Response(JSON.stringify({ allow: true }), {
-        headers: { "Content-Type": "application/json" },
-      });
-    }
+  if (url.pathname === "/check") {
+    return new Response(
+      JSON.stringify({
+        status: "ok",
+        message: "lisans aktif"
+      }),
+      {
+        headers: {
+          "content-type": "application/json; charset=utf-8"
+        }
+      }
+    );
+  }
 
-    return new Response("OK");
-  },
-};
+  return new Response("not found", { status: 404 });
+});
